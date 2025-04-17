@@ -22,6 +22,7 @@
 
       let score = "";
       let showScore = false;
+      let message = "";
 
       if (!isNaN(actual)) {
         const percent = (actual / target) * 100;
@@ -45,9 +46,11 @@
         scoreSection.style.display = "block";
       } else {
         scoreSection.style.display = "none";
+        message = "※ 実測歩行距離を入力すればスコア判定が表示されます。";
       }
 
       document.getElementById("results").classList.remove("hidden");
+      document.getElementById("score-message").textContent = message;
     }
   </script>
   <style>
@@ -134,7 +137,8 @@
 
       <button onclick="calculate()">計算する</button>
 
-      <div id="results" class="results hidden">
+      $1
+        <p id="score-message" style="color: #666; font-size: 0.9rem;"></p>
         <p><strong>目標歩行距離：</strong> <span id="result-target"></span></p>
         <p id="score-section"><strong>スコア判定：</strong> <span id="result-score"></span></p>
       </div>
