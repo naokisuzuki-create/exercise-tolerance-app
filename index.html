@@ -13,7 +13,8 @@
       const actual = parseFloat(document.getElementById("actual").value);
 
       if (!gender || isNaN(age) || isNaN(height) || isNaN(weight)) {
-        alert("性別・年齢・身長・体重を正しく入力してください。");
+        alert("性別・年齢・身長・体重を正しく入力してください。
+※ 実測歩行距離は未入力でも構いません。");
         return;
       }
 
@@ -137,11 +138,15 @@
 
       <button onclick="calculate()">計算する</button>
 
+      $1
         <p id="score-message" style="color: #666; font-size: 0.9rem;"></p>
         <p><strong>目標歩行距離：</strong> <span id="result-target"></span></p>
         <p id="score-section"><strong>スコア判定：</strong> <span id="result-score"></span></p>
       </div>
     </div>
   </div>
+  <footer style="text-align: center; margin-top: 2rem; color: #888; font-size: 0.85rem;">
+    Created by Data Science Department, Tojinkai Hospital
+  </footer>
 </body>
 </html>
