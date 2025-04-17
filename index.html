@@ -12,29 +12,31 @@
       const weight = parseFloat(document.getElementById("weight").value);
       const actual = parseFloat(document.getElementById("actual").value);
 
-      if (!gender || isNaN(age) || isNaN(height) || isNaN(weight) || isNaN(actual)) {
-        alert("すべての項目を正しく入力してください。");
+      if (!gender || isNaN(age) || isNaN(height) || isNaN(weight)) {
+        alert("性別・年齢・身長・体重を正しく入力してください。");
         return;
       }
 
       const genderValue = gender === "male" ? 51.31 : 0;
       const target = 218 + 5.14 * height - 1.8 * weight - 5.32 * age + genderValue;
-      const percent = (actual / target) * 100;
+
       let score = "";
 
-      if (percent >= 80) {
-        score = "正常";
-      } else if (percent >= 60) {
-        score = "軽度低下";
-      } else if (percent >= 40) {
-        score = "中等度低下";
-      } else {
-        score = "高度低下";
+      if (!isNaN(actual)) {
+        const percent = (actual / target) * 100;
+        if (percent >= 80) {
+          score = "正常";
+        } else if (percent >= 60) {
+          score = "軽度低下";
+        } else if (percent >= 40) {
+          score = "中等度低下";
+        } else {
+          score = "高度低下";
+        }
       }
 
       document.getElementById("result-target").textContent = `${target.toFixed(1)} m`;
-      document.getElementById("result-percent").textContent = `${percent.toFixed(1)} %`;
-      document.getElementById("result-score").textContent = score;
+      document.getElementById("result-score").textContent = score || "（未入力）";
       document.getElementById("results").classList.remove("hidden");
     }
   </script>
@@ -114,13 +116,12 @@
       <input type="number" id="weight" placeholder="体重を入力" />
 
       <label for="actual">実測歩行距離（m）</label>
-      <input type="number" id="actual" placeholder="実測値を入力" />
+      <input type="number" id="actual" placeholder="（任意）実測値を入力" />
 
       <button onclick="calculate()">計算する</button>
 
       <div id="results" class="results hidden">
         <p><strong>目標歩行距離：</strong> <span id="result-target"></span></p>
-        <p><strong>%予測値：</strong> <span id="result-percent"></span></p>
         <p><strong>スコア判定：</strong> <span id="result-score"></span></p>
       </div>
     </div>
