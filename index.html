@@ -21,6 +21,7 @@
       const target = 218 + 5.14 * height - 1.8 * weight - 5.32 * age + genderValue;
 
       let score = "";
+      let showScore = false;
 
       if (!isNaN(actual)) {
         const percent = (actual / target) * 100;
@@ -33,10 +34,19 @@
         } else {
           score = "高度低下";
         }
+        showScore = true;
       }
 
       document.getElementById("result-target").textContent = `${target.toFixed(1)} m`;
-      document.getElementById("result-score").textContent = score || "（未入力）";
+
+      const scoreSection = document.getElementById("score-section");
+      if (showScore) {
+        document.getElementById("result-score").textContent = score;
+        scoreSection.style.display = "block";
+      } else {
+        scoreSection.style.display = "none";
+      }
+
       document.getElementById("results").classList.remove("hidden");
     }
   </script>
@@ -98,6 +108,12 @@
 </head>
 <body>
   <div class="container">
+    <div style="text-align: center; margin-bottom: 1rem;">
+      <img src="https://raw.githubusercontent.com/naokisuzuki-create/exercise-tolerance-app/6b60c98dfcfcf83d385a0c5b277b9364e71cec74/%E6%A1%83%E4%BB%81%E4%BC%9A%E3%83%AD%E3%82%B4_%E9%9D%92-%E7%99%BDBack.png" alt="ロゴ" style="max-height: 80px;">
+    </div>
+    <div style="text-align: center; margin-bottom: 1rem;">
+      <img src="https://raw.githubusercontent.com/naokisuzuki-create/exercise-tolerance-app/main/logo.png" alt="ロゴ" style="max-height: 80px;">
+    </div>
     <h1>目標歩行距離計算</h1>
     <div>
       <label>性別</label>
@@ -122,7 +138,7 @@
 
       <div id="results" class="results hidden">
         <p><strong>目標歩行距離：</strong> <span id="result-target"></span></p>
-        <p><strong>スコア判定：</strong> <span id="result-score"></span></p>
+        <p id="score-section"><strong>スコア判定：</strong> <span id="result-score"></span></p>
       </div>
     </div>
   </div>
