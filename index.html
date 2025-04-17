@@ -4,56 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>目標歩行距離計算</title>
-  <script>
-    function calculate() {
-      const gender = document.querySelector('input[name="gender"]:checked')?.value;
-      const age = parseFloat(document.getElementById("age").value);
-      const height = parseFloat(document.getElementById("height").value);
-      const weight = parseFloat(document.getElementById("weight").value);
-      const actual = parseFloat(document.getElementById("actual").value);
-
-      if (!gender || isNaN(age) || isNaN(height) || isNaN(weight)) {
-        alert("性別・年齢・身長・体重を正しく入力してください。
-※ 実測歩行距離は未入力でも構いません。");
-        return;
-      }
-
-      const genderValue = gender === "male" ? 51.31 : 0;
-      const target = 218 + 5.14 * height - 1.8 * weight - 5.32 * age + genderValue;
-
-      let score = "";
-      let showScore = false;
-      let message = "";
-
-      if (!isNaN(actual)) {
-        const percent = (actual / target) * 100;
-        if (percent >= 80) {
-          score = "正常";
-        } else if (percent >= 60) {
-          score = "軽度低下";
-        } else if (percent >= 40) {
-          score = "中等度低下";
-        } else {
-          score = "高度低下";
-        }
-        showScore = true;
-      }
-
-      document.getElementById("result-target").textContent = `${target.toFixed(1)} m`;
-
-      const scoreSection = document.getElementById("score-section");
-      if (showScore) {
-        document.getElementById("result-score").textContent = score;
-        scoreSection.style.display = "block";
-      } else {
-        scoreSection.style.display = "none";
-        message = "※ 実測歩行距離を入力すればスコア判定が表示されます。";
-      }
-
-      document.getElementById("results").classList.remove("hidden");
-      document.getElementById("score-message").textContent = message;
-    }
-  </script>
   <style>
     body {
       font-family: 'Helvetica Neue', sans-serif;
@@ -115,7 +65,7 @@
     <div style="text-align: center; margin-bottom: 1rem;">
       <img src="https://raw.githubusercontent.com/naokisuzuki-create/exercise-tolerance-app/6b60c98dfcfcf83d385a0c5b277b9364e71cec74/%E6%A1%83%E4%BB%81%E4%BC%9A%E3%83%AD%E3%82%B4_%E9%9D%92-%E7%99%BDBack.png" alt="ロゴ" style="max-height: 80px;">
     </div>
-    
+
     <h1>目標歩行距離計算</h1>
     <div>
       <label>性別</label>
@@ -136,7 +86,7 @@
       <label for="actual">実測歩行距離（m）</label>
       <input type="number" id="actual" placeholder="（任意）実測値を入力" />
 
-      <button onclick="calculate()">計算する</button>
+      <button id="calc-button">計算する</button>
 
       <div id="results" class="results hidden">
         <p id="score-message" style="color: #666; font-size: 0.9rem;"></p>
@@ -148,5 +98,55 @@
   <footer style="text-align: center; margin-top: 2rem; color: #888; font-size: 0.85rem;">
     Created by Data Science Department, Tojinkai Hospital
   </footer>
+
+  <script>
+    document.getElementById("calc-button").addEventListener("click", function () {
+      const gender = document.querySelector('input[name="gender"]:checked')?.value;
+      const age = parseFloat(document.getElementById("age").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const actual = parseFloat(document.getElementById("actual").value);
+
+      if (!gender || isNaN(age) || isNaN(height) || isNaN(weight)) {
+        alert("性別・年齢・身長・体重を正しく入力してください。\n※ 実測歩行距離は未入力でも構いません。");
+        return;
+      }
+
+      const genderValue = gender === "male" ? 51.31 : 0;
+      const target = 218 + 5.14 * height - 1.8 * weight - 5.32 * age + genderValue;
+
+      let score = "";
+      let showScore = false;
+      let message = "";
+
+      if (!isNaN(actual)) {
+        const percent = (actual / target) * 100;
+        if (percent >= 80) {
+          score = "正常";
+        } else if (percent >= 60) {
+          score = "軽度低下";
+        } else if (percent >= 40) {
+          score = "中等度低下";
+        } else {
+          score = "高度低下";
+        }
+        showScore = true;
+      }
+
+      document.getElementById("result-target").textContent = `${target.toFixed(1)} m`;
+
+      const scoreSection = document.getElementById("score-section");
+      if (showScore) {
+        document.getElementById("result-score").textContent = score;
+        scoreSection.style.display = "block";
+      } else {
+        scoreSection.style.display = "none";
+        message = "※ 実測歩行距離を入力すればスコア判定が表示されます。";
+      }
+
+      document.getElementById("results").classList.remove("hidden");
+      document.getElementById("score-message").textContent = message;
+    });
+  </script>
 </body>
 </html>
