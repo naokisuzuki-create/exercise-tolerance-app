@@ -83,15 +83,10 @@
       <label for="weight">体重（kg）</label>
       <input type="number" id="weight" placeholder="体重を入力" />
 
-      <label for="actual">実測歩行距離（m）</label>
-      <input type="number" id="actual" placeholder="（任意）実測値を入力" />
-
       <button id="calc-button">計算する</button>
 
       <div id="results" class="results hidden">
-        <p id="score-message" style="color: #666; font-size: 0.9rem;"></p>
         <p><strong>目標歩行距離：</strong> <span id="result-target"></span></p>
-        <p id="score-section" style="display: none;"><strong>スコア判定：</strong> <span id="result-score"></span></p>
       </div>
     </div>
   </div>
@@ -105,47 +100,17 @@
       const age = parseFloat(document.getElementById("age").value);
       const height = parseFloat(document.getElementById("height").value);
       const weight = parseFloat(document.getElementById("weight").value);
-      const actual = parseFloat(document.getElementById("actual").value);
 
       if (!gender || isNaN(age) || isNaN(height) || isNaN(weight)) {
-        alert("性別・年齢・身長・体重を正しく入力してください。\n※ 実測歩行距離は未入力でも構いません。");
+        alert("性別・年齢・身長・体重を正しく入力してください。");
         return;
       }
 
       const genderValue = gender === "male" ? 51.31 : 0;
       const target = 218 + 5.14 * height - 1.8 * weight - 5.32 * age + genderValue;
 
-      let score = "";
-      let showScore = false;
-      let message = "";
-
-      if (!isNaN(actual)) {
-        const percent = (actual / target) * 100;
-        if (percent >= 80) {
-          score = "正常";
-        } else if (percent >= 60) {
-          score = "軽度低下";
-        } else if (percent >= 40) {
-          score = "中等度低下";
-        } else {
-          score = "高度低下";
-        }
-        showScore = true;
-      }
-
       document.getElementById("result-target").textContent = `${target.toFixed(1)} m`;
-
-      const scoreSection = document.getElementById("score-section");
-      if (showScore) {
-        document.getElementById("result-score").textContent = score;
-        scoreSection.style.display = "block";
-      } else {
-        scoreSection.style.display = "none";
-        message = "※ 実測歩行距離を入力すればスコア判定が表示されます。";
-      }
-
       document.getElementById("results").classList.remove("hidden");
-      document.getElementById("score-message").textContent = message;
     });
   </script>
 </body>
